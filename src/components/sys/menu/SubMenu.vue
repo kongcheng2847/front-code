@@ -3,6 +3,9 @@
     <template v-if="item.children && item.children.length>0">
       <el-sub-menu :index="item.path">
         <template #title>
+          <el-icon>
+            <component :is="item.icon"></component>
+          </el-icon>
           <span>{{item.name}}</span>
         </template>
         <SubMenu :menuTree="item.children" />
@@ -10,6 +13,9 @@
     </template>
     <template v-else>
       <el-menu-item :key="item.path" :index="item.path">
+        <el-icon>
+          <component :is="item.icon"></component>
+        </el-icon>
         <span>{{item.name}}</span>
       </el-menu-item>
     </template>

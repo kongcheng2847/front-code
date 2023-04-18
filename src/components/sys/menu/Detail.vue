@@ -5,9 +5,7 @@
         <el-input v-model="menuForm.orderNo" type="number" />
       </el-form-item>
       <el-form-item label="上级菜单" prop="parentId">
-        <el-select v-model="menuForm.parentId" placeholder="上级菜单" style="width: 100%;">
-          <el-option v-for="item in menuOptions" :key="item.id" :label="item.name" :value="item.id" />
-        </el-select>
+        <el-tree-select v-model="menuForm.parentId" :data="menuOptions" check-strictly :render-after-expand="false" style="width: 100%;"></el-tree-select>
       </el-form-item>
       <el-form-item label="菜单名称" prop="name">
         <el-input v-model="menuForm.name" />
@@ -20,8 +18,8 @@
       </el-form-item>
       <el-form-item label="禁用状态" prop="disabled">
         <el-radio-group v-model="menuForm.disabled">
-          <el-radio label="false" size="large">禁用</el-radio>
-          <el-radio label="true" size="large">启用</el-radio>
+          <el-radio :label="Boolean(false)" size="large">启用</el-radio>
+          <el-radio :label="Boolean(true)" size="large">禁用</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="备注" prop="remake">
@@ -60,7 +58,7 @@ export default {
     async submitForm() {
       this.$refs.menuForm.validate((valid, fields) => {
         if (valid) {
-          let res = this.$Http('/menu/save', 'post', this.menuForm);
+          let res = this.$Http('/menu/saveOrUpdate', 'post', this.menuForm);
           this.$Message.success('提交成功！');
           this.$emit('doClose');
         } else {
@@ -72,14 +70,29 @@ export default {
       this.$refs.menuForm.resetFields();
     },
     async initMenuOptions() {
-      let res = await this.$Http('/menu/list', 'get');
+      let res = await this.$Http('/menu/listTreeMenu', 'get');
+      res.data.forEach(e => {
+        this.setMenuTree(e);
+      });
       this.menuOptions = res.data;
+      console.log(this.menuOptions);
     },
     async initData() {
       let res = await this.$Http('/menu/info', 'post', {
         id: this.id
       });
       this.menuForm = res.data;
+    },
+    setMenuTree(obj) {
+      obj['label'] = obj.name;
+      obj['value'] = obj.id;
+      if (obj.children) {
+        obj.children.forEach(e => {
+          this.setMenuTree(e);
+        });
+      } else {
+        return;
+      }
     }
   }
 };

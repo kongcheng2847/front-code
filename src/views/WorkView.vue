@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       msg: 'WorkView',
-      activeIndex: '1',
+      activeIndex: '/sys/menu',
       menuTree: []
     };
   },
@@ -45,6 +45,7 @@ export default {
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
+      // this.router.to(this.activeIndex);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);

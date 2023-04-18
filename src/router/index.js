@@ -32,6 +32,17 @@ const routes = [
                 component: () => import('../views/sys/dict/DictView.vue')
               }
             ]
+          },
+          {
+            path: '/trade',
+            name: 'trade',
+            children: [
+              {
+                path: '/trade/stock',
+                name: 'stock ',
+                component: () => import('../views/trade/stock/StockView.vue')
+              }
+            ]
           }
         ]
       }

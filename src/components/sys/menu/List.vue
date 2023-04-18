@@ -8,6 +8,7 @@
       row-key="id"
       default-expand-all
       highlight-current-row
+      :header-cell-style="headerCellStyle"
       @selection-change="handleSelectionChange"
       @current-change="handleCurrentChange"
       @row-dblclick="handleRowDbClick"
@@ -18,7 +19,7 @@
       <el-table-column prop="name" label="菜单名称" />
       <el-table-column prop="icon" label="菜单图标" />
       <el-table-column prop="disabled" label="禁用状态">
-        <template #default="scope">{{scope.row.disabled?'否':'是'}}</template>
+        <template #default="scope">{{scope.row.disabled?'是':'否'}}</template>
       </el-table-column>
       <el-table-column prop="path" label="菜单路径" />
       <el-table-column prop="remake" label="备注" />
@@ -67,6 +68,16 @@ export default {
       });
       console.log(res);
       this.tableData = res.data;
+    },
+    // 表头单元格样式
+    headerCellStyle({ row, column, rowIndex, columnIndex }) {
+      return {
+        backgroundColor: '#f0f2f5',
+        color: '#001436',
+        fontWeight: 500,
+        padding: '8px 0px',
+        fontSize: '12px'
+      };
     },
     handleCurrentChange(val) {
       this.currentRow = val;
