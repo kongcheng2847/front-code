@@ -1,0 +1,15 @@
+.el-header {
+  padding: 0;
+}
+
+.el-main {
+  padding: 0;
+}
+
+.el-dialog {
+  border-radius: 5px;
+}
+
+.el-table {
+  border-radius: 5px;
+}
