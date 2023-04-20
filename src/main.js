@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 
 import ElementPlus from 'element-plus';
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
 import { ElLoading } from 'element-plus';
 import { ElMessage } from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
@@ -21,12 +22,10 @@ app.config.globalProperties.$Http = Http;
 app.config.globalProperties.$Message = ElMessage;
 app.config.globalProperties.$Loading = ElLoading;
 // 给 vue 实例挂载内部对象
+app.config.globalProperties.$VXETable = VXETable;
 app.config.globalProperties.$XModal = VXETable.modal;
-app.config.globalProperties.$XPrint = VXETable.print;
-app.config.globalProperties.$XSaveFile = VXETable.saveFile;
-app.config.globalProperties.$XReadFile = VXETable.readFile;
 
-app.use(ElementPlus);
+app.use(ElementPlus, { locale: zhCn });
 app.use(VXETable, { zIndex: 3000 });
 app.use(router);
 

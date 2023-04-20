@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form ref="menuForm" :model="menuForm" :rules="rules" label-width="80px" size="small" status-icon>
-      <el-form-item label="序号" prop="orderNo">
+      <el-form-item label="序号">
         <el-input v-model="menuForm.orderNo" type="number" />
       </el-form-item>
       <el-form-item label="上级菜单" prop="parentId">
@@ -10,7 +10,7 @@
       <el-form-item label="菜单名称" prop="name">
         <el-input v-model="menuForm.name" />
       </el-form-item>
-      <el-form-item label="菜单图标" prop="icon">
+      <el-form-item label="菜单图标">
         <el-input v-model="menuForm.icon" />
       </el-form-item>
       <el-form-item label="菜单路径" prop="path">
@@ -22,7 +22,7 @@
           <el-radio :label="Boolean(true)" size="large">禁用</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="备注" prop="remake">
+      <el-form-item label="备注">
         <el-input type="textarea" v-model="menuForm.remake" />
       </el-form-item>
       <el-form-item>
@@ -41,7 +41,12 @@ export default {
   data() {
     return {
       menuForm: {},
-      rules: [],
+      rules: {
+        parentId: [{ required: true, message: '上级菜单必填', trigger: 'blur' }],
+        name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
+        path: [{ required: true, message: '菜单路径必填', trigger: 'blur' }],
+        disabled: [{ required: true, message: '菜单状态必填', trigger: 'blur' }]
+      },
       menuOptions: []
     };
   },

@@ -30,6 +30,11 @@ const routes = [
                 path: '/sys/dict',
                 name: 'dict',
                 component: () => import('../views/sys/dict/DictView.vue')
+              },
+              {
+                path: '/sys/file',
+                name: 'file',
+                component: () => import('../views/sys/file/FileView.vue')
               }
             ]
           },

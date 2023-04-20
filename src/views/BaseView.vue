@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>{{msg}}</h1>
+  <div class="base-group" :style="{ height: bodyHeight + 'px' }">
+    <el-calendar v-model="value" />
   </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   name: 'BaseView',
   data() {
     return {
-      msg: 'BaseView'
+      value: new Date()
     };
   },
   mounted() {
@@ -28,9 +28,26 @@ export default {
       });
       console.log(res);
     }
+  },
+  computed: {
+    bodyHeight: {
+      get: function () {
+        return window.innerHeight - 85;
+      },
+      set: function (newValue) {
+        this.$refs.table.$el.style.height = newValue + 'px';
+      }
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.base-group {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  border: 1px solid #ebedf0;
+  border-radius: 5px;
+}
 </style>
