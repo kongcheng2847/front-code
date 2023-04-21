@@ -67,6 +67,22 @@ instance.interceptors.response.use(
   res => {
     // 响应成功
     loadingInstance.close();
+    console.info(res);
+    const contentType = res['headers']['content-type'];
+    if (contentType.indexOf('octet-stream') > -1 || contentType.indexOf('image') > -1) {
+      const blob = new Blob([res['data']]);
+      const cd = res['headers']['content-disposition'];
+      const filename = decodeURI(cd.substring(cd.indexOf('=') + 1));
+      const elink = document.createElement('a');
+      elink.download = filename;
+      elink.style.display = 'none';
+      elink.href = URL.createObjectURL(blob);
+      document.body.appendChild(elink);
+      elink.click();
+      URL.revokeObjectURL(elink.href); // 释放URL 对象
+      document.body.removeChild(elink);
+      return;
+    }
     return res.data;
   },
   error => {
