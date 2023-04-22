@@ -4,16 +4,17 @@ import { ElMessage } from 'element-plus';
 
 let instance = axios.create({
   baseURL: 'http://localhost:9002/',
-  timeout: 1000
+  timeout: 20000
 });
 
 // 请求格式或参数的统一
-const Http = async function (
+const FileHttp = async function (
   url,
-  method,
   params, // 请求参数：get，post，put，patch，delete
   isFormData = false, // 标识是否为 form-data请求
-  config = {}
+  config = {
+    responseType: 'blob'
+  }
 ) {
   let newParams = {};
   // 判断是否为form-data请求
@@ -25,35 +26,24 @@ const Http = async function (
   } else {
     newParams = params;
   }
-  // 不同请求的判断
   let response = {}; // 请求的返回值
-  if (method === 'put' || method === 'post' || method === 'patch') {
-    try {
-      response = await instance[method](url, newParams, config);
-    } catch (error) {
-      response = error;
-    }
-  } else if (method === 'get' || method === 'delete') {
-    config.params = newParams;
-    try {
-      response = await instance[method](url, newParams, config);
-    } catch (error) {
-      response = error;
-    }
+  try {
+    response = await instance['post'](url, newParams, config);
+  } catch (error) {
+    response = error;
   }
   return response;
 };
 
 // 请求拦截器
-let loadingInstance = null;
+const loadingInstance = ElLoading.service({
+  lock: true,
+  text: '加载中...',
+  background: 'rgba(0, 0, 0, 0.7)'
+});
 instance.interceptors.request.use(
   config => {
     // 发起请求前
-    loadingInstance = ElLoading.service({
-      lock: true,
-      text: '加载中...',
-      background: 'rgba(0, 0, 0, 0.7)'
-    });
     return config;
   },
   error => {
@@ -67,9 +57,18 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   res => {
     // 响应成功
-    // setTimeout(() => {}, 500);
     loadingInstance.close();
-    return res.data;
+    const blob = new Blob([res['data']]);
+    const cd = res['headers']['content-disposition'];
+    const filename = decodeURI(cd.substring(cd.indexOf('=') + 1));
+    const elink = document.createElement('a');
+    elink.download = filename;
+    elink.style.display = 'none';
+    elink.href = URL.createObjectURL(blob);
+    document.body.appendChild(elink);
+    elink.click();
+    URL.revokeObjectURL(elink.href); // 释放URL 对象
+    document.body.removeChild(elink);
   },
   error => {
     // 响应失败
@@ -78,4 +77,4 @@ instance.interceptors.response.use(
   }
 );
 
-export default Http;
+export default FileHttp;

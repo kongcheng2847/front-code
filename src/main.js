@@ -16,9 +16,11 @@ import App from './App.vue';
 import router from './router';
 
 import Http from '@/utils/Http';
+import FileHttp from '@/utils/FileHttp';
 
 const app = createApp(App);
 app.config.globalProperties.$Http = Http;
+app.config.globalProperties.$FileHttp = FileHttp;
 app.config.globalProperties.$Message = ElMessage;
 app.config.globalProperties.$Loading = ElLoading;
 // 给 vue 实例挂载内部对象

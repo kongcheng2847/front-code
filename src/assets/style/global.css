@@ -17,3 +17,10 @@
 .header-group {
   background-color: #f0f2f5;
 }
+
+.table-pagination {
+  display: flex;
+  margin-top: 3px;
+  align-items: center;
+  justify-content: center;
+}

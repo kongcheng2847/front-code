@@ -1,5 +1,5 @@
 <template>
-  <div class="dict-list-group">
+  <div class="file-list-group">
     <el-table
       ref="table"
       :data="tableData"
@@ -7,10 +7,10 @@
       border
       highlight-current-row
       :header-cell-style="headerCellStyle"
-      @current-change="handleCurrentChange"
+      @current-change="handleRowClick"
       @selection-change="handleSelectionChange"
       @row-dblclick="handleRowDbClick"
-      style="width: 100%; height: 98%;"
+      style="width: 100%; height: 95%;"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column type="index" label="序号" width="80" />
@@ -26,6 +26,19 @@
         <el-empty description="暂无数据" />
       </template>
     </el-table>
+    <div class="table-pagination">
+      <el-pagination
+        small
+        background
+        layout="total, sizes, prev, pager, next, jumper"
+        :page-sizes="[10, 30, 50]"
+        :total="page.total"
+        :page-size="page.pageSize"
+        :current-page="page.pageNumber"
+        @size-change="handleSizeChange"
+        @current-change="handleNumberChange"
+      />
+    </div>
     <div v-if="detailDialog">
       <el-dialog v-model="detailDialog" width="50%" draggable @close="initData">
         <template #header="{  titleId, titleClass }">
@@ -50,7 +63,13 @@ export default {
       multipleSelection: [],
       currentRow: null,
       detailDialog: false,
-      file: null
+      file: null,
+      disabled: false,
+      page: {
+        total: 0,
+        pageSize: 10,
+        pageNumber: 1
+      }
     };
   },
   mounted() {
@@ -62,11 +81,12 @@ export default {
   methods: {
     async initData() {
       let res = await this.$Http('/file/queryPage', 'post', {
-        pageSize: 1,
-        pageNumber: 10,
+        pageSize: this.page.pageSize,
+        pageNumber: this.page.pageNumber,
         condition: {}
       });
       console.log(res);
+      this.page.total = res.data.total;
       this.tableData = res.data.records;
     },
     // 表头单元格样式
@@ -79,15 +99,23 @@ export default {
         fontSize: '12px'
       };
     },
-    handleCurrentChange(val) {
+    handleRowClick(val) {
       this.currentRow = val;
-    },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
     },
     handleRowDbClick(row) {
       this.file = row;
       this.detailDialog = true;
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    handleSizeChange(val) {
+      this.page.pageSize = val;
+      this.initData();
+    },
+    handleNumberChange(val) {
+      this.page.pageNumber = val;
+      this.initData();
     },
     async toBatchDelete() {
       if (this.multipleSelection.length === 0) {
@@ -103,14 +131,12 @@ export default {
       if (this.multipleSelection.length === 0) {
         return this.$Message.warning('无数据！');
       } else if (this.multipleSelection.length === 1) {
-        await this.$Http('/file/dowloadFile', 'post', {
-          id: this.multipleSelection[0].id
-        });
+        await this.$FileHttp('/file/dowloadFile', { id: this.multipleSelection[0].id });
       } else {
         const ids = this.multipleSelection.map(e => {
           return e.id;
         });
-        await this.$Http('/file/dowloadFiles', 'post', ids);
+        await this.$FileHttp('/file/dowloadFiles', ids);
       }
       this.initData();
     },
@@ -138,7 +164,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dict-list-group {
+.file-list-group {
   height: 100%;
 }
 </style>
