@@ -17,9 +17,11 @@ import router from './router';
 
 import Http from '@/utils/Http';
 import FileHttp from '@/utils/FileHttp';
+import FileBlob from '@/utils/FileBlob';
 
 const app = createApp(App);
 app.config.globalProperties.$Http = Http;
+app.config.globalProperties.$FileBlob = FileBlob;
 app.config.globalProperties.$FileHttp = FileHttp;
 app.config.globalProperties.$Message = ElMessage;
 app.config.globalProperties.$Loading = ElLoading;

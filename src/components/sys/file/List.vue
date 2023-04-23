@@ -19,7 +19,18 @@
       <el-table-column prop="fileType" label="文件类型" />
       <el-table-column fixed="right" label="操作" width="120">
         <template #default="scope">
-          <el-button link type="primary" size="small" @click="handleClick(scope.row)">预览</el-button>
+          <el-image
+            v-if="scope.row.fileType=='image'"
+            style="display: flex; align-items: center; width: 30px; height: 20px"
+            fit="cover"
+            preview-teleported
+            hide-on-click-modal
+            :src="scope.row.filePath"
+            :zoom-rate="1.2"
+            :initial-index="0"
+            :preview-src-list="previewList"
+          />
+          <el-button v-else link type="primary" size="small" @click="handleClick(scope.row)">预览</el-button>
         </template>
       </el-table-column>
       <template v-slot:empty>
@@ -49,22 +60,46 @@
         <Detail @doClose="doClose" :file="file"></Detail>
       </el-dialog>
     </div>
+    <div v-if="previewDialog">
+      <el-dialog v-model="previewDialog" width="50%" draggable @close="initData">
+        <template #header="{  titleId, titleClass }">
+          <div class="dialog-header">
+            <span :id="titleId" :class="titleClass">{{preview.title}}</span>
+          </div>
+        </template>
+        <PreviewPDF v-if="preview.type=='pdf'" :id="preview.id"></PreviewPDF>
+        <PreviewDocx v-if="preview.type=='docx' || preview.type=='txt'" :url="preview.path"></PreviewDocx>
+        <PreviewXLSX v-if="preview.type=='xlsx' || preview.type=='xls'" :id="preview.id"></PreviewXLSX>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
 import Detail from './Detail.vue';
+import PreviewDOC from './PreviewDOC.vue';
+import PreviewPDF from './PreviewPDF.vue';
+import PreviewXLSX from './PreviewXLSX.vue';
+import PreviewDocx from './PreviewDocx.vue';
 
 export default {
   name: 'List',
   data() {
     return {
       tableData: [],
+      previewList: [],
       multipleSelection: [],
       currentRow: null,
       detailDialog: false,
+      previewDialog: false,
       file: null,
       disabled: false,
+      preview: {
+        id: null,
+        url: null,
+        type: null,
+        title: null
+      },
       page: {
         total: 0,
         pageSize: 10,
@@ -76,7 +111,11 @@ export default {
     this.initData();
   },
   components: {
-    Detail
+    Detail,
+    PreviewPDF,
+    PreviewDOC,
+    PreviewXLSX,
+    PreviewDocx
   },
   methods: {
     async initData() {
@@ -88,6 +127,7 @@ export default {
       console.log(res);
       this.page.total = res.data.total;
       this.tableData = res.data.records;
+      this.previewList = this.tableData.filter(e => e.fileType == 'image').map(e => e.filePath);
     },
     // 表头单元格样式
     headerCellStyle({ row, column, rowIndex, columnIndex }) {
@@ -142,6 +182,15 @@ export default {
     },
     handleClick(row) {
       console.log(row.id);
+      let fileName = row.fileName;
+      let suffix = fileName.substring(fileName.lastIndexOf('.') + 1);
+      this.preview = {
+        id: row.id,
+        type: suffix,
+        title: row.fileName,
+        path: row.filePath
+      };
+      this.previewDialog = true;
     },
     doClose() {
       this.detailDialog = false;
