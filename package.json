@@ -15,14 +15,12 @@
     "core-js": "^3.8.3",
     "docx-preview": "^0.1.15",
     "element-plus": "^2.3.3",
-    "pdfjs-dist": "2.13.216",
     "sass": "^1.62.0",
     "sass-loader": "^13.2.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vxe-table": "^4.3.11",
-    "xe-utils": "^3.5.7",
-    "xlsx": "^0.18.5"
+    "xe-utils": "^3.5.7"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

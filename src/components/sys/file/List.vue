@@ -30,7 +30,7 @@
             :initial-index="0"
             :preview-src-list="previewList"
           />
-          <el-button v-else link type="primary" size="small" @click="handleClick(scope.row)">预览</el-button>
+          <el-button v-else link type="primary" size="small" @click="previewPDF(scope.row)">预览</el-button>
         </template>
       </el-table-column>
       <template v-slot:empty>
@@ -61,15 +61,13 @@
       </el-dialog>
     </div>
     <div v-if="previewDialog">
-      <el-dialog v-model="previewDialog" width="50%" draggable @close="initData">
+      <el-dialog v-model="previewDialog" width="50%" draggable>
         <template #header="{  titleId, titleClass }">
           <div class="dialog-header">
-            <span :id="titleId" :class="titleClass">{{preview.title}}</span>
+            <span :id="titleId" :class="titleClass">{{ preview.name }}</span>
           </div>
         </template>
-        <PreviewPDF v-if="preview.type=='pdf'" :id="preview.id"></PreviewPDF>
-        <PreviewDocx v-if="preview.type=='docx' || preview.type=='txt'" :url="preview.path"></PreviewDocx>
-        <PreviewXLSX v-if="preview.type=='xlsx' || preview.type=='xls'" :id="preview.id"></PreviewXLSX>
+        <PreviewDocx :id="preview.id"></PreviewDocx>
       </el-dialog>
     </div>
   </div>
@@ -77,9 +75,6 @@
 
 <script>
 import Detail from './Detail.vue';
-import PreviewDOC from './PreviewDOC.vue';
-import PreviewPDF from './PreviewPDF.vue';
-import PreviewXLSX from './PreviewXLSX.vue';
 import PreviewDocx from './PreviewDocx.vue';
 
 export default {
@@ -93,13 +88,11 @@ export default {
       detailDialog: false,
       previewDialog: false,
       file: null,
-      disabled: false,
       preview: {
         id: null,
-        url: null,
-        type: null,
-        title: null
+        name: null
       },
+      disabled: false,
       page: {
         total: 0,
         pageSize: 10,
@@ -112,9 +105,6 @@ export default {
   },
   components: {
     Detail,
-    PreviewPDF,
-    PreviewDOC,
-    PreviewXLSX,
     PreviewDocx
   },
   methods: {
@@ -182,21 +172,26 @@ export default {
     },
     handleClick(row) {
       console.log(row.id);
-      let fileName = row.fileName;
-      let suffix = fileName.substring(fileName.lastIndexOf('.') + 1);
-      this.preview = {
-        id: row.id,
-        type: suffix,
-        title: row.fileName,
-        path: row.filePath
-      };
-      this.previewDialog = true;
     },
     doClose() {
       this.detailDialog = false;
       setTimeout(() => {
         this.initData();
       }, 500);
+    },
+    async previewPDF(row) {
+      let res = await this.$FileBlob('/file/dowloadFile', { id: row.id });
+      let fileName = row.fileName;
+      let suffix = fileName.substring(fileName.lastIndexOf('.') + 1);
+      if (suffix === 'pdf') {
+        let win = window.open(window.URL.createObjectURL(new Blob([res['data']], { type: 'application/pdf' })), window.tit);
+        setTimeout(() => (win.document.title = fileName), 500);
+      } else {
+        this.preview.id = row.id;
+        this.preview.name = fileName;
+        this.previewDialog = true;
+        // this.$Message.warning('非PDF文件不可预览!');
+      }
     }
   },
   computed: {
