@@ -61,13 +61,15 @@
       </el-dialog>
     </div>
     <div v-if="previewDialog">
-      <el-dialog v-model="previewDialog" width="50%" draggable>
+      <el-dialog v-model="previewDialog" width="65%" draggable>
         <template #header="{  titleId, titleClass }">
           <div class="dialog-header">
             <span :id="titleId" :class="titleClass">{{ preview.name }}</span>
           </div>
         </template>
-        <PreviewDocx :id="preview.id"></PreviewDocx>
+        <PreviewDocx v-if="preview.type=='doc'" :id="preview.id"></PreviewDocx>
+        <PreviewExcelVue v-if="preview.type=='excel'" :id="preview.id" :fileName="preview.name"></PreviewExcelVue>
+        <PreviewTxtVue v-if="preview.type=='txt'" :id="preview.id"></PreviewTxtVue>
       </el-dialog>
     </div>
   </div>
@@ -76,6 +78,8 @@
 <script>
 import Detail from './Detail.vue';
 import PreviewDocx from './PreviewDocx.vue';
+import PreviewTxtVue from './PreviewTxt.vue';
+import PreviewExcelVue from './PreviewExcel.vue';
 
 export default {
   name: 'List',
@@ -90,7 +94,8 @@ export default {
       file: null,
       preview: {
         id: null,
-        name: null
+        name: null,
+        type: null
       },
       disabled: false,
       page: {
@@ -105,7 +110,9 @@ export default {
   },
   components: {
     Detail,
-    PreviewDocx
+    PreviewDocx,
+    PreviewTxtVue,
+    PreviewExcelVue
   },
   methods: {
     async initData() {
@@ -114,7 +121,7 @@ export default {
         pageNumber: this.page.pageNumber,
         condition: {}
       });
-      console.log(res);
+      // console.log(res);
       this.page.total = res.data.total;
       this.tableData = res.data.records;
       this.previewList = this.tableData.filter(e => e.fileType == 'image').map(e => e.filePath);
@@ -183,15 +190,24 @@ export default {
       let res = await this.$FileBlob('/file/dowloadFile', { id: row.id });
       let fileName = row.fileName;
       let suffix = fileName.substring(fileName.lastIndexOf('.') + 1);
+      this.preview.id = row.id;
+      this.preview.name = fileName;
+
       if (suffix === 'pdf') {
+        this.preview.type = suffix;
         let win = window.open(window.URL.createObjectURL(new Blob([res['data']], { type: 'application/pdf' })), window.tit);
         setTimeout(() => (win.document.title = fileName), 500);
+        return;
+      } else if (suffix.indexOf('doc') > -1) {
+        this.preview.type = 'doc';
+      } else if (suffix.indexOf('xls') > -1) {
+        this.preview.type = 'excel';
+      } else if (suffix == 'txt') {
+        this.preview.type = suffix;
       } else {
-        this.preview.id = row.id;
-        this.preview.name = fileName;
-        this.previewDialog = true;
-        // this.$Message.warning('非PDF文件不可预览!');
+        this.$Message.warning('非PDF/DOC/DOCX/EXCEL/TXT文件不可预览!');
       }
+      this.previewDialog = true;
     }
   },
   computed: {

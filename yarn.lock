@@ -1310,21 +1310,6 @@
   dependencies:
     "@types/node" "*"
 
-"@vue-office/docx@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@vue-office/docx/-/docx-1.0.0.tgz#50b8144e8e25eede6a42940a71efc476cd576eff"
-  integrity sha512-VqCW3yDqnWamuaXEAmpRillh9lfmw4TC8kWElV0utgmOrUINj3bFI3Pbx+6lUeAqBe+EwyJfaEFvpOLe0gILzg==
-
-"@vue-office/excel@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@vue-office/excel/-/excel-1.0.0.tgz#9ed0365af9e41e41bb53460338667170a61c389f"
-  integrity sha512-b9N8fTcxM/4WO8Zx/uzMLWt9zA3pQCKCX1Tr4i/15c0syABqfdzX0oGkr89/w5wmKcNqprorwFpZgtzqU6xXHQ==
-
-"@vue-office/pdf@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@vue-office/pdf/-/pdf-1.0.0.tgz#f871c9831eab7a201b61e477e73a3776184f5fd1"
-  integrity sha512-57w2ekjkg5NC3h40MJldjDe81mZi/TRy/Lee76O1gS6GYOkALk1zhwYx+yUrvVv3G5vfTsWuAYzflkV852UL2A==
-
 "@vue/babel-helper-vue-jsx-merge-props@^1.4.0":
   version "1.4.0"
   resolved "https://registry.npmmirror.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.4.0.tgz#8d53a1e21347db8edbe54d339902583176de09f2"
@@ -3715,7 +3700,7 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jszip@>=3.0.0:
+jszip@>=3.0.0, jszip@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.10.1.tgz#34aee70eb18ea1faec2f589208a157d1feb091c2"
   integrity sha512-xXDvecyTpGLrqFrvkrUSoxxfJI5AH7U8zxxtVclpsUtMCq4JQ290LY8AW5c7Ggnr/Y/oK+bQMbqK2qmtk3pN4g==
@@ -3887,6 +3872,13 @@ lru-cache@^6.0.0:
   integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   dependencies:
     yallist "^4.0.0"
+
+luckyexcel@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/luckyexcel/-/luckyexcel-1.0.1.tgz#55791f28bb5393e9dff8ba77c11f9c05f9ceb5ae"
+  integrity sha512-hvbJmCXNp/vST/huA6sieDn32Ib8bd80L9aIu5ZGxniJvZle7VlpHZrl6weLGaEnX99+t7cPAoYGqrqbfZp/AQ==
+  dependencies:
+    jszip "^3.5.0"
 
 magic-string@^0.25.7:
   version "0.25.9"

@@ -47,8 +47,10 @@ export default {
 :deep(.docx-wrapper) {
   background-color: #fff;
   padding: 0;
+  display: flex;
 }
 :deep(.docx-wrapper > section.docx) {
+  align-items: center;
   width: 100% !important;
   margin: 0px auto !important;
   padding: 0rem !important;
