@@ -37,19 +37,7 @@
         <el-empty description="暂无数据" />
       </template>
     </el-table>
-    <div class="table-pagination">
-      <el-pagination
-        small
-        background
-        layout="total, sizes, prev, pager, next, jumper"
-        :page-sizes="[10, 30, 50]"
-        :total="page.total"
-        :page-size="page.pageSize"
-        :current-page="page.pageNumber"
-        @size-change="handleSizeChange"
-        @current-change="handleNumberChange"
-      />
-    </div>
+    <Pagination :page="page" @initData="initData"></Pagination>
     <div v-if="detailDialog">
       <el-dialog v-model="detailDialog" width="50%" draggable @close="initData">
         <template #header="{  titleId, titleClass }">
@@ -97,7 +85,6 @@ export default {
         name: null,
         type: null
       },
-      disabled: false,
       page: {
         total: 0,
         pageSize: 10,
@@ -145,14 +132,6 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
-    },
-    handleSizeChange(val) {
-      this.page.pageSize = val;
-      this.initData();
-    },
-    handleNumberChange(val) {
-      this.page.pageNumber = val;
-      this.initData();
     },
     async toBatchDelete() {
       if (this.multipleSelection.length === 0) {

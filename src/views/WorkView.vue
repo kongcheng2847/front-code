@@ -7,11 +7,12 @@
           active-text-color="#ffd04b"
           background-color="#545c64"
           class="el-menu-vertical-demo"
-          :default-active="activeIndex"
+          :default-active="$route.path"
+          :collapse="isCollapse"
           text-color="#fff"
           @open="handleOpen"
           @close="handleClose"
-          style="height: 100%;"
+          style="height: 97%;"
         >
           <SubMenu :menuTree="menuTree"></SubMenu>
         </el-menu>
@@ -30,9 +31,8 @@ export default {
   name: 'WorkView',
   data() {
     return {
-      msg: 'WorkView',
-      activeIndex: '/sys/menu',
-      menuTree: []
+      menuTree: [],
+      isCollapse: false
     };
   },
   mounted() {

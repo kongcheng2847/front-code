@@ -2,11 +2,11 @@
   <div>
     <el-menu
       router
-      :default-active="activeIndex"
+      :default-active="$route.path"
       :ellipsis="false"
       mode="horizontal"
-      background-color="#545c64"
       text-color="#fff"
+      background-color="#545c64"
       active-text-color="#ffd04b"
       @select="handleSelect"
     >

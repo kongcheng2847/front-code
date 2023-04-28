@@ -15,6 +15,10 @@ import 'vxe-table/lib/style.css';
 import App from './App.vue';
 import router from './router';
 
+// 全局分页组件
+import Pagination from './components/Pagination.vue';
+
+// 全局axios请求组件
 import Http from '@/utils/Http';
 import FileHttp from '@/utils/FileHttp';
 import FileBlob from '@/utils/FileBlob';
@@ -28,6 +32,9 @@ app.config.globalProperties.$Loading = ElLoading;
 // 给 vue 实例挂载内部对象
 app.config.globalProperties.$VXETable = VXETable;
 app.config.globalProperties.$XModal = VXETable.modal;
+
+// 全局挂载分页组件
+app.component('Pagination', Pagination);
 
 app.use(ElementPlus, { locale: zhCn });
 app.use(VXETable, { zIndex: 3000 });
