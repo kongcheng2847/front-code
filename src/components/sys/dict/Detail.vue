@@ -3,22 +3,22 @@
     <vxe-toolbar ref="xToolbar" :loading="loading">
       <template #buttons>
         <div>
-          <vxe-form :data="dict" size="mini">
+          <vxe-form :data="dict">
             <vxe-form-item title="编码" field="name" :item-render="{}">
               <template #default="{ data }">
-                <vxe-input v-model="data.code" placeholder="请输入编码" size="mini" clearable></vxe-input>
+                <vxe-input v-model="data.code" placeholder="请输入编码" clearable></vxe-input>
               </template>
             </vxe-form-item>
             <vxe-form-item title="名称" field="code" :item-render="{}">
               <template #default="{ data }">
-                <vxe-input v-model="data.name" placeholder="请输入名称" size="mini" clearable></vxe-input>
+                <vxe-input v-model="data.name" placeholder="请输入名称" clearable></vxe-input>
               </template>
             </vxe-form-item>
           </vxe-form>
         </div>
-        <vxe-button status="primary" content="新增" size="mini" @click="insertEvent"></vxe-button>
-        <vxe-button status="danger" content="删除" size="mini" @click="deleteSelectEvent"></vxe-button>
-        <vxe-button status="primary" content="提交" size="mini" @click="saveEvent"></vxe-button>
+        <vxe-button status="primary" content="新增" @click="insertEvent"></vxe-button>
+        <vxe-button status="danger" content="删除" @click="deleteSelectEvent"></vxe-button>
+        <vxe-button status="primary" content="提交" @click="saveEvent"></vxe-button>
       </template>
     </vxe-toolbar>
     <vxe-table
@@ -27,7 +27,6 @@
       keep-source
       ref="dictTable"
       height="400"
-      size="small"
       :data="tableData"
       :column-config="{resizable: true}"
       :edit-config="{trigger: 'click', mode: 'cell', showUpdateStatus: true, showInsertStatus: true}"
@@ -38,16 +37,6 @@
           <vxe-input v-model="row.orderNo" type="number"></vxe-input>
         </template>
       </vxe-column>
-      <!-- <vxe-column field="name" title="字典名称" :edit-render="{autofocus: '.vxe-input--inner'}">
-        <template #edit="{ row }">
-          <vxe-input v-model="row.name" type="text"></vxe-input>
-        </template>
-      </vxe-column>
-      <vxe-column field="code" title="字典编码" :edit-render="{}">
-        <template #edit="{ row }">
-          <vxe-input v-model="row.code" type="text"></vxe-input>
-        </template>
-      </vxe-column>-->
       <vxe-column field="value" title="实际值" :edit-render="{}">
         <template #edit="{ row }">
           <vxe-input v-model="row.value" type="text"></vxe-input>

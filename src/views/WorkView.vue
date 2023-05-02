@@ -1,9 +1,8 @@
 <template>
   <div class="work-group">
     <el-container :style="{ height: height + 'px' }">
-      <el-aside width="200px">
+      <el-aside class="aside-group">
         <el-menu
-          router
           active-text-color="#ffd04b"
           background-color="#545c64"
           class="el-menu-vertical-demo"
@@ -12,12 +11,12 @@
           text-color="#fff"
           @open="handleOpen"
           @close="handleClose"
-          style="height: 97%;"
+          style="height: 100%;"
         >
           <SubMenu :menuTree="menuTree"></SubMenu>
         </el-menu>
       </el-aside>
-      <el-main>
+      <el-main class="main-content">
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -70,5 +69,16 @@ export default {
 .work-group {
   width: 100%;
   height: 100%;
+  background-color: #ebedf0;
+
+  .aside-group {
+    margin: 10px;
+    border-radius: 5px;
+  }
+  .main-content {
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--el-border-color);
+  }
 }
 </style>

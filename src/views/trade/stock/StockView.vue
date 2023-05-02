@@ -1,9 +1,15 @@
 <template>
   <div class="stock-group">
     <div class="header-group">
-      <el-button type="primary" size="small" @click="()=>{this.detailDialog = true;}">新增</el-button>
-      <el-button type="primary" size="small" @click="()=>{this.$refs.stockList.initData();}">刷新</el-button>
-      <el-button type="primary" size="small" @click="()=>{this.$refs.stockList.toBatchDelete();}">删除</el-button>
+      <el-tooltip content="新增" placement="top">
+        <el-button type="primary" icon="Plus" size="large" @click="()=>{this.detailDialog = true;}"></el-button>
+      </el-tooltip>
+      <el-tooltip content="删除" placement="top">
+        <el-button type="danger" icon="Delete" size="large" @click="()=>{this.$refs.stockList.toBatchDelete();}"></el-button>
+      </el-tooltip>
+      <el-tooltip content="刷新" placement="top">
+        <el-button type="info" icon="Refresh" size="large" @click="()=>{this.$refs.stockList.initData();}"></el-button>
+      </el-tooltip>
     </div>
     <div class="main-group">
       <List ref="stockList"></List>
@@ -49,22 +55,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .stock-group {
-  margin: 10px;
-  height: calc(100% - 25px);
-  border: 1px solid #ebedf0;
-  border-radius: 5px;
-
-  .header-group {
-    display: flex;
-    margin: 5px;
-    padding: 5px;
-    height: 30px;
-    align-items: center;
-    border: 1px solid #ebedf0;
-  }
+  height: 100%;
   .main-group {
-    padding: 5px;
-    height: calc(100% - 50px);
+    height: calc(100% - 52px);
   }
   .dialog-header {
     display: flex;

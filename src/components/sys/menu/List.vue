@@ -5,6 +5,7 @@
       :data="tableData"
       stripe
       border
+      size="large"
       row-key="id"
       default-expand-all
       highlight-current-row
@@ -12,7 +13,7 @@
       @selection-change="handleSelectionChange"
       @current-change="handleCurrentChange"
       @row-dblclick="handleRowDbClick"
-      style="width: 100%; height: 98%;"
+      style="width: 100%; height: 100%;"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column prop="orderNo" label="序号" />
@@ -105,16 +106,6 @@ export default {
       });
       let res = await this.$Http('/menu/batchDelete', 'post', ids);
       this.initData();
-    }
-  },
-  computed: {
-    tableHeight: {
-      get: function () {
-        return window.innerHeight - 120;
-      },
-      set: function (newValue) {
-        this.$refs.table.$el.style.height = newValue + 'px';
-      }
     }
   }
 };

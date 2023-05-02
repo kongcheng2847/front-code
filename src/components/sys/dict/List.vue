@@ -5,11 +5,12 @@
       :data="tableData"
       stripe
       border
+      size="large"
       highlight-current-row
       :header-cell-style="headerCellStyle"
       @current-change="handleCurrentChange"
       @row-dblclick="handleRowDbClick"
-      style="width: 100%; height: 98%;"
+      style="width: 100%; height: 100%;"
     >
       <el-table-column type="index" label="序号" width="80" />
       <el-table-column prop="code" label="字典编码" />

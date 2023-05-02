@@ -15,12 +15,11 @@
 }
 
 .header-group {
-  background-color: #f0f2f5;
-}
-
-.table-pagination {
   display: flex;
-  margin-top: 3px;
+  height: 30px;
+  padding: 10px;
+  border-radius: 5px;
   align-items: center;
-  justify-content: center;
+  background-color: #ffffff;
+  border: 1px solid var(--el-border-color);
 }

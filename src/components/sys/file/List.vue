@@ -5,12 +5,13 @@
       :data="tableData"
       stripe
       border
+      size="large"
       highlight-current-row
       :header-cell-style="headerCellStyle"
       @current-change="handleRowClick"
       @selection-change="handleSelectionChange"
       @row-dblclick="handleRowDbClick"
-      style="width: 100%; height: 95%;"
+      style="width: 100%; height: 100%;"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column type="index" label="序号" width="80" />

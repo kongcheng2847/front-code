@@ -1,11 +1,21 @@
 <template>
   <div class="file-group">
     <div class="header-group">
-      <vxe-button status="primary" size="mini" @click="uploadSingle" style="height: 24px;">单文件上传</vxe-button>
-      <vxe-button status="primary" size="mini" @click="uploadMultiple" style="margin-right: 10px; height: 24px;">多文件上传</vxe-button>
-      <el-button type="primary" size="small" @click="()=>{this.$refs.fileList.initData();}">刷新</el-button>
-      <el-button type="primary" size="small" @click="()=>{this.$refs.fileList.toBatchDelete();}">删除</el-button>
-      <el-button type="primary" size="small" @click="()=>{this.$refs.fileList.toBatchDowloadFile();}">下载</el-button>
+      <el-tooltip content="单文件上传" placement="top">
+        <vxe-button status="primary" icon="vxe-icon-upload" @click="uploadSingle" style="height: 40px;"></vxe-button>
+      </el-tooltip>
+      <el-tooltip content="多文件上传" placement="top">
+        <vxe-button status="primary" icon="vxe-icon-upload" @click="uploadMultiple" style="margin-right: 10px; height: 40px;"></vxe-button>
+      </el-tooltip>
+      <el-tooltip content="刷新" placement="top">
+        <el-button type="info" icon="Refresh" size="large" @click="()=>{this.$refs.fileList.initData();}"></el-button>
+      </el-tooltip>
+      <el-tooltip content="删除" placement="top">
+        <el-button type="danger" icon="Delete" size="large" @click="()=>{this.$refs.fileList.toBatchDelete();}"></el-button>
+      </el-tooltip>
+      <el-tooltip content="下载" placement="top">
+        <el-button type="primary" icon="Download" size="large" @click="()=>{this.$refs.fileList.toBatchDowloadFile();}"></el-button>
+      </el-tooltip>
     </div>
     <div class="main-group">
       <List ref="fileList"></List>
@@ -94,22 +104,9 @@ export default {
 
 <style lang="scss" scoped>
 .file-group {
-  margin: 10px;
-  height: calc(100% - 25px);
-  border: 1px solid #ebedf0;
-  border-radius: 5px;
-
-  .header-group {
-    display: flex;
-    margin: 5px;
-    padding: 5px;
-    height: 30px;
-    align-items: center;
-    border: 1px solid #ebedf0;
-  }
+  height: 100%;
   .main-group {
-    padding: 5px;
-    height: calc(100% - 50px);
+    height: calc(100% - 92px);
   }
   .dialog-header {
     display: flex;

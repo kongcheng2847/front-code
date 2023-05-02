@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form ref="menuForm" :model="menuForm" :rules="rules" label-width="80px" size="small" status-icon>
+    <el-form ref="menuForm" :model="menuForm" :rules="rules" label-width="80px" size="large" status-icon>
       <el-form-item label="序号" prop="orderNo">
         <el-input v-model="menuForm.orderNo" type="number" />
       </el-form-item>
@@ -27,8 +27,8 @@
       </el-form-item>
       <el-form-item>
         <div style="float: right;">
-          <el-button type="primary" @click="submitForm(ruleFormRef)" size="small">提交</el-button>
-          <el-button @click="resetForm(ruleFormRef)" size="small">重置</el-button>
+          <el-button type="primary" @click="submitForm(ruleFormRef)" size="large">提交</el-button>
+          <el-button @click="resetForm(ruleFormRef)" size="large">重置</el-button>
         </div>
       </el-form-item>
     </el-form>

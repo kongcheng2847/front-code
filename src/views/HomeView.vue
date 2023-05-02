@@ -28,5 +28,9 @@ export default {
 .home {
   background-color: #ffffff;
   height: 100%;
+
+  :deep(.el-header) {
+    height: 100%;
+  }
 }
 </style>
