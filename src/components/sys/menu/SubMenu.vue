@@ -34,3 +34,9 @@ export default {
   methods: {}
 };
 </script>
+
+<style lang="scss" scoped>
+:deep(.el-sub-menu__title) {
+  padding-right: 0;
+}
+</style>
