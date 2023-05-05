@@ -18,6 +18,11 @@ const routes = [
         component: () => import('../views/WorkView.vue'),
         children: [
           {
+            path: '/control',
+            name: 'control',
+            component: () => import('../views/control/ControlView.vue')
+          },
+          {
             path: '/sys',
             name: 'sys',
             children: [

@@ -31,6 +31,9 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+      if (key == '/work') {
+        this.$router.push('/control');
+      }
     },
     goTo(path) {
       this.$router.push(path);

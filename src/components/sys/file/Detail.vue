@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form ref="fileForm" :model="fileForm" :rules="rules" label-width="100px" size="small" status-icon>
+    <el-form ref="fileForm" :model="fileForm" :rules="rules" label-width="100px" size="large" status-icon>
       <el-form-item label="文件名称" prop="fileName">
         <el-input v-model="fileForm.fileName" />
       </el-form-item>
@@ -21,8 +21,8 @@
       </el-form-item>
       <el-form-item>
         <div style="float: right;">
-          <el-button type="primary" @click="submitForm(ruleFormRef)" size="small">提交</el-button>
-          <el-button @click="resetForm(ruleFormRef)" size="small">重置</el-button>
+          <el-button type="primary" @click="submitForm(ruleFormRef)" size="large">提交</el-button>
+          <el-button @click="resetForm(ruleFormRef)" size="large">重置</el-button>
         </div>
       </el-form-item>
     </el-form>

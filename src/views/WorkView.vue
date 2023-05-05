@@ -15,7 +15,9 @@
           style="height: 100%;"
         >
           <div class="shrink-group">
-            <div class="shrink-title" v-show="!isCollapse">{{'收起导航栏'}}</div>
+            <transition name="el-fade-in-linear">
+              <div class="shrink-title" v-if="!isCollapse">{{'收起导航栏'}}</div>
+            </transition>
             <div class="shrink-icon">
               <template v-if="isCollapse">
                 <el-icon>
@@ -60,7 +62,6 @@ export default {
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
-      // this.router.to(this.activeIndex);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
