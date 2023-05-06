@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'Raffle',
+  name: 'Carousel',
   data() {
     return {
       autoplay: true,

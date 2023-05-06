@@ -53,6 +53,17 @@ const routes = [
                 component: () => import('../views/trade/stock/StockView.vue')
               }
             ]
+          },
+          {
+            path: '/raffle',
+            name: 'raffle',
+            children: [
+              {
+                path: '/raffle/lucky',
+                name: 'stock ',
+                component: () => import('../views/raffle/lucky/LuckyDrawView.vue')
+              }
+            ]
           }
         ]
       }

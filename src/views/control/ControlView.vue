@@ -1,25 +1,19 @@
 <template>
   <div class="control-group">
-    <Raffle></Raffle>
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
-import Raffle from '@/components/control/Raffle.vue';
-
 export default {
   name: 'ControlView',
   data() {
-    return {};
-  },
-  components: {
-    Raffle
+    return {
+      msg: '控制台'
+    };
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.control-group {
-  height: 100%;
-}
 </style>

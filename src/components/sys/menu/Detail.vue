@@ -40,7 +40,9 @@ export default {
   name: 'Detail',
   data() {
     return {
-      menuForm: {},
+      menuForm: {
+        parentId: 'root'
+      },
       rules: {
         parentId: [{ required: true, message: '上级菜单必填', trigger: 'blur' }],
         name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
