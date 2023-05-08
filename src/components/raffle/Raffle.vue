@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <div v-for="item in awards" :key="item.index" :class="{ active: activeIndex === item.index }">
-      <template v-if="item.index==0">
+    <div v-for="item in awards" :key="item.awardIndex" :class="{ active: activeIndex === item.awardIndex }">
+      <template v-if="item.awardIndex==0">
         <el-button type="primary" icon="Plus" size="large" @click="start(item)" style="width: 50%; height: 40%;">幸运抽奖</el-button>
       </template>
       <template v-else>
-        <span>{{ item.content }}</span>
+        <span>{{ item.awardContent }}</span>
       </template>
     </div>
   </div>
@@ -59,9 +59,17 @@ export default {
       time: 400 //定义速度
     };
   },
+  mounted() {
+    this.initAwards();
+  },
   methods: {
+    async initAwards() {
+      let res = await this.$Http('/raffle/awardConfig/list', 'post');
+      console.log(res);
+      this.awards = res.data;
+    },
     start(item) {
-      if (item.index !== 0) return;
+      if (item.awardIndex !== 0) return;
       //轮盘转动
       //   const selectIndex = 2;
       //定义一个随机数
@@ -70,10 +78,14 @@ export default {
       this.startView(selectIndex, () => {
         //停止时的回调函数
         const result = this.awards.find(item => {
-          return item.index === selectIndex;
+          return item.awardIndex === selectIndex;
         });
         //输出结果
-        console.log('当前抽中:' + result.content);
+        console.log('当前抽中:' + result.awardContent);
+        this.$Http('/raffle/awardRecords/save', 'post', {
+          awardId: result.id,
+          awardContent: result.awardContent
+        });
       });
     },
     startView(selectIndex, fn) {

@@ -59,8 +59,18 @@ const routes = [
             name: 'raffle',
             children: [
               {
+                path: '/raffle/awards',
+                name: 'awards ',
+                component: () => import('../views/raffle/awardConfig/AwardConfigView.vue')
+              },
+              {
+                path: '/raffle/records',
+                name: 'records',
+                component: () => import('../views/raffle/awardRecords/AwardRecordsView.vue')
+              },
+              {
                 path: '/raffle/lucky',
-                name: 'stock ',
+                name: 'lucky ',
                 component: () => import('../views/raffle/lucky/LuckyDrawView.vue')
               }
             ]

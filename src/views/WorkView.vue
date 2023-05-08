@@ -9,6 +9,7 @@
           class="el-menu-vertical"
           :default-active="$route.path"
           :collapse="isCollapse"
+          :unique-opened="true"
           text-color="#fff"
           @open="handleOpen"
           @close="handleClose"
